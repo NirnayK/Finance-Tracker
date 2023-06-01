@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 
-export default function Add() {
+export default function Add(props) {
   // Form grid using tailwindcss
 
   const [expenseName, setExpenseName] = React.useState("");
@@ -106,24 +106,23 @@ export default function Add() {
             </div>
           </div>
         </div>
-        <Link
-          href={{
-            pathname: "/",
-            query: {
+
+        <button
+          type="button"
+          className="text-lime-950 bg-lime-400  focus:ring-4 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+          onClick={() => {
+            props.data.push({
               expenseName: expenseName,
-              amount: amount,
+              expenseAmount: amount,
               expenseDate: expenseDate,
-              category: category,
-            },
+              expenseCategory: category,
+            });
+
+            props.set([...props.data]);
           }}
         >
-          <button
-            type="button"
-            className="text-lime-950 bg-lime-400  focus:ring-4 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-          >
-            SUBMIT
-          </button>
-        </Link>
+          SUBMIT
+        </button>
       </div>
     </div>
   );
