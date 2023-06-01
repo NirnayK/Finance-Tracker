@@ -31,6 +31,8 @@ export default function Show(props) {
     },
   ];
 
+  data = [...props.data, ...data];
+
   //   const router = useRouter();
 
   // Get the query parameter from the URL
