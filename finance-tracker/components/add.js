@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export default function Add(props) {
   // Form grid using tailwindcss
-
   const [expenseName, setExpenseName] = React.useState("");
   const [amount, setAmount] = React.useState("");
   const [expenseDate, setExpenseDate] = React.useState("");
@@ -96,11 +95,10 @@ export default function Add(props) {
                 value={category}
                 onChange={handleCategoryChange}
               >
-                <option>Miscellaneous</option>
-                <option>Entertainment</option>
-                <option>Shopping</option>
-                <option>Groceries</option>
-                <option>Travel</option>
+                <option>Category 1</option>
+                <option>Category 2</option>
+                <option>Category 3</option>
+                <option>Category 4</option>
               </select>
               <div className="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-gray-950"></div>
             </div>
@@ -111,14 +109,15 @@ export default function Add(props) {
           type="button"
           className="text-lime-950 bg-lime-400 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
           onClick={() => {
-            props.data.push({
-              expenseName: expenseName,
-              expenseAmount: amount,
-              expenseDate: expenseDate,
-              expenseCategory: category,
-            });
-
-            props.set([...props.data]);
+            props.set([
+              ...props.data,
+              {
+                expenseName: expenseName,
+                expenseAmount: amount,
+                expenseDate: expenseDate,
+                expenseCategory: category,
+              },
+            ]);
           }}
         >
           SUBMIT
