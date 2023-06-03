@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Add data={data} set={() => setData(data)} />
+      <Add data={data} set={(d) => setData(d)} />
       <Charts data={data} />
       <Show data={data} />
       <Export data={data} />

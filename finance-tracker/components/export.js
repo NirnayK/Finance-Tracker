@@ -2,56 +2,7 @@ import React from "react";
 import ExcelLogo from "../app/excel_logo.png";
 
 export default function Show(props) {
-  let data = [
-    {
-      expenseName: "Name 1",
-      expenseAmount: 100,
-      expenseDate: "2021-01-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 2",
-      expenseAmount: 200,
-      expenseDate: "2021-01-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 3",
-      expenseAmount: 300,
-      expenseDate: "2021-01-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 4",
-      expenseAmount: 400,
-      expenseDate: "2021-01-04",
-      expenseCategory: "Category 4",
-    },
-    {
-      expenseName: "Name 5",
-      expenseAmount: 100,
-      expenseDate: "2021-01-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 6",
-      expenseAmount: 200,
-      expenseDate: "2021-01-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 7",
-      expenseAmount: 300,
-      expenseDate: "2021-01-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 8",
-      expenseAmount: 400,
-      expenseDate: "2021-01-04",
-      expenseCategory: "Category 4",
-    },
-  ];
+  let data = [...props.data];
 
   function exportData() {
     const csvRows = [];
