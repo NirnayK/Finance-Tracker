@@ -29,6 +29,30 @@ export default function Show(props) {
       expenseDate: "2021-01-04",
       expenseCategory: "Category 4",
     },
+    {
+      expenseName: "Name 5",
+      expenseAmount: 100,
+      expenseDate: "2021-01-01",
+      expenseCategory: "Category 1",
+    },
+    {
+      expenseName: "Name 6",
+      expenseAmount: 200,
+      expenseDate: "2021-01-02",
+      expenseCategory: "Category 2",
+    },
+    {
+      expenseName: "Name 7",
+      expenseAmount: 300,
+      expenseDate: "2021-01-03",
+      expenseCategory: "Category 3",
+    },
+    {
+      expenseName: "Name 8",
+      expenseAmount: 400,
+      expenseDate: "2021-01-04",
+      expenseCategory: "Category 4",
+    },
   ];
 
   data = [...props.data, ...data];
@@ -56,7 +80,7 @@ export default function Show(props) {
         <div className="flex justify-center items-center w-screen text-gray-950 max-w-full">
           <div className=" w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 ">
             <div className="flex flex-col">
-              <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="-my-2 overflow-auto max-h-80 sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200">
