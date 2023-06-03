@@ -27,6 +27,30 @@ export default function Show(props) {
       expenseDate: "2021-01-04",
       expenseCategory: "Category 4",
     },
+    {
+      expenseName: "Name 5",
+      expenseAmount: 100,
+      expenseDate: "2021-01-01",
+      expenseCategory: "Category 1",
+    },
+    {
+      expenseName: "Name 6",
+      expenseAmount: 200,
+      expenseDate: "2021-01-02",
+      expenseCategory: "Category 2",
+    },
+    {
+      expenseName: "Name 7",
+      expenseAmount: 300,
+      expenseDate: "2021-01-03",
+      expenseCategory: "Category 3",
+    },
+    {
+      expenseName: "Name 8",
+      expenseAmount: 400,
+      expenseDate: "2021-01-04",
+      expenseCategory: "Category 4",
+    },
   ];
 
   function exportData() {
@@ -60,21 +84,26 @@ export default function Show(props) {
     <>
       <div>
         <div className="flex justify-center items-center w-screen text-gray-950 max-w-full">
-          <div className="flex flex-col justify-center items-center w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 ">
-            <h1 className="text-center pb-4 text-xl font-bold">
+          <div className="flex flex-col justify-evenly items-center w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 md:flex-row ">
+            <h1 className="text-centerpb-4 text-xl font-bold my-2 md:my-0">
               Export data to CSV
               <img
                 src="https://img.icons8.com/?size=512&id=UECmBSgBOvPT&format=png"
                 alt="Excel Logo"
-                className="pl-2 w-10 h-8 inline-block"
+                className="pl-2 w-10 h-8 hidden inline-block md:inline-block"
               />
             </h1>
             <button
               type="button"
-              className=" w-fir text-lime-950 bg-lime-400 focus:ring-lime-300 font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+              className=" w-fir text-lime-950 bg-lime-400 focus:ring-lime-300 font-bold rounded-lg text-l px-3 py-1.5 mr-2 mb-2 "
               onClick={exportData}
             >
               DOWNLOAD
+              <img
+                src="https://img.icons8.com/?size=512&id=UECmBSgBOvPT&format=png"
+                alt="Excel Logo"
+                className="pl-1 w-8 h-7 inline-block md:hidden"
+              />
             </button>
           </div>
         </div>
