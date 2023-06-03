@@ -53,7 +53,7 @@ export default function Show(props) {
   return (
     <>
       <div>
-        <div className="flex justify-center items-center w-screen text-gray-950">
+        <div className="flex justify-center items-center w-screen text-gray-950 max-w-full">
           <div className=" w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 ">
             <div className="flex flex-col">
               <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -89,6 +89,12 @@ export default function Show(props) {
                           <th scope="col" className="relative px-6 py-3">
                             <span className="sr-only">Edit</span>
                           </th>
+                          {/* <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
+                          >
+                            Export Data
+                          </th> */}
                           <th scope="col" className="relative px-6 py-3">
                             <span className="sr-only">Delete</span>
                           </th>

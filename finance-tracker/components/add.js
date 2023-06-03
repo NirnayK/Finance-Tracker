@@ -26,7 +26,7 @@ export default function Add(props) {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-full">
+    <div className="flex justify-center items-center w-screen h-full max-w-full">
       <div className=" w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 ">
         <div className="-mx-3 md:flex mb-6">
           <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -109,7 +109,7 @@ export default function Add(props) {
 
         <button
           type="button"
-          className="text-lime-950 bg-lime-400  focus:ring-4 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+          className="text-lime-950 bg-lime-400 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
           onClick={() => {
             props.data.push({
               expenseName: expenseName,
