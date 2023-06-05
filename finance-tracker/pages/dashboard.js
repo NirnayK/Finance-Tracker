@@ -8,6 +8,7 @@ import Modals from "../components/modals";
 import React from "react";
 import Navbar from '@/components/NavBar';
 import CustomSessionProvider from '@/components/CustomSessionProvider';
+import {QueryClient, QueryClientProvider} from "react-query";
 
 export default function Dashboard() {
   //   dashboard page to a financial tracker app using tailwindcss with option to add delete and update the finances
@@ -18,16 +19,14 @@ export default function Dashboard() {
   const [show, setShow] = React.useState(false);
 
   return (
-    <>
+    <QueryClientProvider client={new QueryClient()}>
       <CustomSessionProvider>
-        <Navbar />
-        <QueryClientProvider client={query}>
-          <Add data={data} set={(d) => setData(d)} />
-          <Charts data={data} />
-          <Show data={data} />
-          <Export data={data} />
-        </QueryClientProvider>
-      </CustomSessionProvider >
-    </>
+        <Navbar/>
+        <Add data={data} set={(d) => setData(d)}/>
+        <Charts data={data}/>
+        <Show data={data}/>
+        <Export data={data}/>
+      </CustomSessionProvider>
+    </QueryClientProvider>
   );
 }
