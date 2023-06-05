@@ -19,7 +19,8 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className="flex items-center">
-                if (session) {
+                {
+                    (session) &&
                     <Link href="/dashboard">
                         <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 mr-4">
                             Dashboard
