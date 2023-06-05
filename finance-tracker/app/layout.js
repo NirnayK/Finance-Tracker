@@ -1,7 +1,7 @@
 import './globals.css'
-import { Inter } from 'next/font/google';
-import Nav from '@/components/Nav';
-import Provider from '@/components/Provider';
+import { Inter } from 'next/font/google'
+import CustomSessionProvider from '@/components/CustomSessionProvider'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -11,19 +11,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
-      <body>
-        <Provider>
-          <div className='main'>
-            <div className='gradient' />
-          </div>
-
-          <main className='app'>
-            <Nav />
-            {children}
-          </main>
-        </Provider>
-      </body>
+    <html lang="en" className="bg-white">
+      <CustomSessionProvider>
+        <body className={inter.className}>{children}</body>
+      </CustomSessionProvider>
     </html>
   )
 }
