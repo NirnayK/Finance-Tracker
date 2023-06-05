@@ -1,23 +1,56 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import {useQuery} from "react-query";
 
 export default function Add(props) {
   // Form grid using tailwindcss
 
   const [expenseName, setExpenseName] = React.useState("");
-  const [amount, setAmount] = React.useState("");
+  const [amount, setAmount] = React.useState(0);
   const [expenseDate, setExpenseDate] = React.useState("");
   const [category, setCategory] = React.useState("");
+  const [flag, setFlag] = React.useState(false);
   const user_id = 1;
+
+  const fetchData = async (user_id) => {
+    return await fetch('http://localhost:3000/api/get', {
+      method: 'POST',
+      headers: {
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({user_id})
+    }).then(res => res.json());
+  }
+
+  const {data: data1, error: error1, refetch: refetch1} = useQuery(
+    ['fetchData', user_id],
+    () => fetchData(user_id),
+    {enabled: false}
+  );
+
+  useEffect(() => {
+    refetch1();
+  }, [refetch1]);
+
+  useEffect(() => {
+    if (data1 && data1.data) {
+      console.log(data1.data.reverse());
+      props.set(data1.data);
+    }
+  }, [data1]);
+
+  useEffect(() => {
+    if (error1)
+      alert(error1);
+  }, [error1]);
 
   // create functions to handle the change in the input fields
   const handleExpenseNameChange = (event) => {
     setExpenseName(event.target.value);
   };
   const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+    setAmount(Number.parseFloat(event.target.value));
   };
   const handleExpenseDateChange = (event) => {
     setExpenseDate(event.target.value);
@@ -42,25 +75,31 @@ export default function Add(props) {
     {enabled: false}
   );
 
-  if (data) {
-    if (data.error) {
+  useEffect(() => {
+    if (data && data.error) {
       alert(Object.values(data.error)[0]);
-    } else {
-      props.set([...props.data,
+    } else if (flag && data && data.data) {
+      console.log("HERE");
+
+      props.set([
         {
           expense_id: data.data,
-          expenseName: expenseName,
-          expenseAmount: amount,
-          expenseDate: expenseDate,
-          expenseCategory: category,
-        }
+          expense_desc: expenseName,
+          expense_amt: amount,
+          expense_date: expenseDate,
+          expense_category: category,
+        },
+        ...props.data
       ]);
-    }
-  }
 
-  if (error) {
-    alert(error);
-  }
+      setFlag(false);
+    }
+  }, [flag, data]);
+
+  useEffect(() => {
+    if (error)
+      alert(error);
+  }, [error]);
 
   return (
     <div className="flex justify-center items-center w-screen h-full max-w-full">
@@ -149,6 +188,7 @@ export default function Add(props) {
           type="button"
           className="text-lime-950 bg-lime-400 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
           onClick={() => {
+            setFlag(true);
             refetch().catch(e => console.log('[error] ', e));
           }}
         >
