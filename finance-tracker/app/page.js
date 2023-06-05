@@ -1,14 +1,15 @@
 import Image from "next/image";
 import HomePage from "@/components/HomePage";
 import Dashboard from "@/pages/dashboard";
-import Nav from "@/components/Nav";
+
+import Navbar from "@/components/NavBar";
 
 export default function Home() {
   return (
     <>
-      {/* <Nav /> */}
-      {/* <HomePage /> */}
+      <Navbar />
       <Dashboard />
+      {/* <HomePage /> */}
     </>
   );
 }

@@ -58,9 +58,12 @@ export default function Show(props) {
   //   },
   // ];
 
-  let data = [...props.data];
+  // let data = [...props.data];
   const [show, setShow] = React.useState(false);
   const [open, setOpen] = useState(props.show);
+  useEffect(() => {
+    console.log(props.data);
+  }, [props]);
 
   //   useEffect(() => {
   //     props.set(false);
@@ -126,67 +129,70 @@ export default function Show(props) {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {data.map((item) => (
-                          <tr key={item}>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center">
-                                {/* <div className="flex-shrink-0 h-10 w-10">
+                        {props.data.map((item) => {
+                          const d = new Date(item.expense_date);
+                          return (
+                            <tr key={item.expense_id}>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="flex items-center">
+                                  {/* <div className="flex-shrink-0 h-10 w-10">
                                   <img
                                     className="h-10 w-10 rounded-full"
                                     src={person.image}
                                     alt=""
                                   />
                                 </div> */}
-                                {/* <div className="ml-4"> */}
-                                <div className="text-sm font-medium text-gray-900">
-                                  {item.expenseName}
-                                </div>
-                                {/* <div className="text-sm text-gray-950">
+                                  {/* <div className="ml-4"> */}
+                                  <div className="text-sm font-medium text-gray-900">
+                                    {item.expense_desc}
+                                  </div>
+                                  {/* <div className="text-sm text-gray-950">
                                     {item.expenseAmount}
                                   </div> */}
-                                {/* </div> */}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm text-gray-900">
-                                {item.expenseAmount}
-                              </div>
-                              {/* <div className="text-sm text-gray-950">
+                                  {/* </div> */}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="text-sm text-gray-900">
+                                  {item.expense_amt}
+                                </div>
+                                {/* <div className="text-sm text-gray-950">
                                 {item.expenseCategory}
                               </div> */}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span
-                                className="px-2 inline-flex text-xs leading-5
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span
+                                  className="px-2 inline-flex text-xs leading-5
                       font-semibold rounded-full bg-lime-100 text-lime-800"
-                              >
-                                {item.expenseDate}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-950">
-                              {item.expenseCategory}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              {/* <a
+                                >
+                                  {d.toDateString()}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-950">
+                                {item.expense_category}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                {/* <a
                                 className="text-indigo-600 hover:text-indigo-900"
                                 onClick={
                                   // toggle models
                                   setShow(true)
                                 }
                               > */}
-                              <button
-                                className="text-red-500"
-                                onClick={() => setOpen(true)}
-                              >
-                                Edit
-                              </button>
-                              {/* </a> */}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button onClick={() => {}}>Delete</button>
-                            </td>
-                          </tr>
-                        ))}
+                                <button
+                                  className="text-red-500"
+                                  onClick={() => setOpen(true)}
+                                >
+                                  Edit
+                                </button>
+                                {/* </a> */}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button onClick={() => {}}>Delete</button>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -209,7 +215,7 @@ export default function Show(props) {
       >
         New Modal
       </button> */}
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root show={show} as={Fragment}>
           <Dialog
             as="div"
             className="relative z-10"
