@@ -1,7 +1,10 @@
+'use client';
 import Link from 'next/link';
 import SignInButton from './SignInButton';
+import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
+    const { data: session } = useSession();
     return (
         <nav className="flex items-center justify-between p-4">
             <div className="flex items-center">
@@ -16,11 +19,14 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className="flex items-center">
-                <Link href="/dashboard">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 mr-4">
-                        Dashboard
-                    </button>
-                </Link>
+                {
+                    (session) &&
+                    <Link href="/dashboard">
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 mr-4">
+                            Dashboard
+                        </button>
+                    </Link>
+                }
                 <SignInButton />
             </div>
         </nav>

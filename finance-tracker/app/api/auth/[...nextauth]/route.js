@@ -3,7 +3,7 @@ import * as pg from 'pg';
 // import clientPromise from "@/lib/mongodb"
 import GoogleProvider from 'next-auth/providers/google';
 import SequelizeAdapter from "@next-auth/sequelize-adapter";
-import {Sequelize} from "sequelize";
+import { Sequelize } from "sequelize";
 
 console.log(process.env.GOOGLE_ID);
 
