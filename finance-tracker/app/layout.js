@@ -1,8 +1,7 @@
 import './globals.css'
 import {Inter} from 'next/font/google'
 import CustomSessionProvider from '@/components/CustomSessionProvider'
-import {QueryClient, QueryClientProvider} from "react-query";
-import Navbar from "@/components/NavBar";
+import Navbar from '@/components/NavBar'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -14,14 +13,12 @@ export const metadata = {
 export default function RootLayout({children}) {
   return (
     <html lang="en" className="bg-white">
-    <body className={inter.className}>
-    <CustomSessionProvider>
-      <QueryClientProvider client={new QueryClient()}>
-        <Navbar/>
-        {children}
-      </QueryClientProvider>
-    </CustomSessionProvider>
-    </body>
+      <CustomSessionProvider>
+        <body className={inter.className}>
+          <Navbar />
+          {children}
+        </body>
+      </CustomSessionProvider>
     </html>
   )
 }
