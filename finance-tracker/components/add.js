@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
+import {useSession} from "next-auth/react";
 
 export default function Add(props) {
   // Form grid using tailwindcss
@@ -11,14 +12,17 @@ export default function Add(props) {
   const [category, setCategory] = React.useState("");
   const [flag, setFlag] = React.useState(false);
   const user_id = 1;
+  const { data: session } = useSession();
 
-  const fetchData = async (user_id) => {
+  console.log(session);
+
+  const fetchData = async (email) => {
     return await fetch("http://localhost:3000/api/get", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user_id }),
+      body: JSON.stringify({ email }),
     }).then((res) => res.json());
   };
 
@@ -26,7 +30,7 @@ export default function Add(props) {
     data: data1,
     error: error1,
     refetch: refetch1,
-  } = useQuery(["fetchData", user_id], () => fetchData(user_id), {
+  } = useQuery(["fetchData", session.user.email], () => fetchData(session.user.email), {
     enabled: false,
   });
 

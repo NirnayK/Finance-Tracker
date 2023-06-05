@@ -4,10 +4,10 @@ import {v4 as uuidv4} from 'uuid';
 const checkBody = (body) => {
     let error = {};
 
-    if (!Boolean(body.user_id)) {
+    if (!Boolean(body.email)) {
         error = {
             ...error,
-            user_id: 'user_id field cannot be empty',
+            email: 'email field cannot be empty',
         };
     }
 
@@ -78,10 +78,10 @@ export default async function handler(req, res) {
         } else {
             try {
                 const id = uuidv4();
-                const query = `INSERT INTO expenses (expense_id, expense_desc, user_id, expense_amt, expense_date, expense_category) VALUES (
+                const query = `INSERT INTO expenses (expense_id, expense_desc, email, expense_amt, expense_date, expense_category) VALUES (
                     '${id}',
                     '${req.body.desc}',
-                    ${req.body.user_id},
+                    '${req.body.email}',
                     ${req.body.amount},
                     '${req.body.date}',
                     '${req.body.category}'
