@@ -37,25 +37,25 @@ function DoughnutChart(props) {
 
   const sum_category1 = data.reduce((total, item) => {
     if (item.expenseCategory === "Category 1") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_category2 = data.reduce((total, item) => {
     if (item.expenseCategory === "Category 2") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_category3 = data.reduce((total, item) => {
     if (item.expenseCategory === "Category 3") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_category4 = data.reduce((total, item) => {
     if (item.expenseCategory === "Category 4") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
@@ -76,73 +76,73 @@ function DoughnutChart(props) {
 
   const sum_jan = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "01") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_feb = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "02") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_mar = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "03") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_april = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "04") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_may = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "05") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_june = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "06") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_july = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "07") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_aug = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "08") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_sept = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "09") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_oct = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "10") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_nov = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "11") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
   const sum_dec = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "12") {
-      total += item.expenseAmount;
+      total += Number(item.expenseAmount);
     }
     return total;
   }, 0);
@@ -193,7 +193,8 @@ function DoughnutChart(props) {
   return (
     <>
       <div className="flex justify-center items-center w-screen text-gray-950 max-w-full">
-        <div className="flex flex-col justify-center items-center w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 ">
+        {/* <div className=" w-5/6 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 md:w-2/3"> */}
+        <div className="flex flex-col justify-center items-center w-5/6 md:w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 ">
           {/* <h1>Creating a Doughnut Chart</h1> */}
           <div className="flex flex-col md:flex-row w-full">
             <div className="flex justify-center w-screen max-h-60 md:w-1/3 text-gray-950 max-w-full">
@@ -208,6 +209,7 @@ function DoughnutChart(props) {
             </div>
           </div>
         </div>
+        {/* </div> */}
       </div>
     </>
   );
