@@ -79,8 +79,6 @@ export default function Add(props) {
     if (data && data.error) {
       alert(Object.values(data.error)[0]);
     } else if (flag && data && data.data) {
-      console.log("HERE");
-
       props.set([
         {
           expense_id: data.data,
