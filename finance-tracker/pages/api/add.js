@@ -1,4 +1,5 @@
 import db from "@/db";
+import {v4 as uuidv4} from 'uuid';
 
 const checkBody = (body) => {
     let error = {};
@@ -6,28 +7,35 @@ const checkBody = (body) => {
     if (!Boolean(body.user_id)) {
         error = {
             ...error,
-            user_id: 'This field cannot be empty',
+            user_id: 'user_id field cannot be empty',
         };
     }
 
     if (!Boolean(body.desc)) {
         error = {
             ...error,
-            desc: 'This field cannot be empty',
+            desc: 'Description name field cannot be empty',
         };
     }
 
     if (!Boolean(body.amount)) {
         error = {
             ...error,
-            amount: 'This field cannot be empty',
+            amount: 'amount field cannot be empty',
         };
     }
 
     if (!Boolean(body.date)) {
         error = {
             ...error,
-            date: 'This field cannot be empty',
+            date: 'date field cannot be empty',
+        };
+    }
+
+    if (!Boolean(body.category)) {
+        error = {
+            ...error,
+            category: 'Category field cannot be empty',
         };
     }
 
@@ -45,13 +53,22 @@ const checkBody = (body) => {
         };
     }
 
+    if (!(body.category === 'Miscellaneous' ||
+        body.category === 'Entertainment' ||
+        body.category === 'Shopping' ||
+        body.category === 'Groceries' ||
+        body.category === 'Travel')) {
+        error = {
+            ...error,
+            category: 'Enter a valid category'
+        }
+    }
+
     return error;
 }
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
-        // const result = await db.query(`SELECT * FROM users
-
         const error = checkBody(req.body);
 
         if (Object.keys(error).length !== 0) {
@@ -60,17 +77,21 @@ export default async function handler(req, res) {
             });
         } else {
             try {
-                const query = `INSERT INTO expenses (expense_desc, user_id, expense_amt, expense_date) VALUES ('${req.body.desc}',
+                const id = uuidv4();
+                const query = `INSERT INTO expenses (expense_id, expense_desc, user_id, expense_amt, expense_date, expense_category) VALUES (
+                    '${id}',
+                    '${req.body.desc}',
                     ${req.body.user_id},
                     ${req.body.amount},
-                    '${req.body.date}'
+                    '${req.body.date}',
+                    '${req.body.category}'
                 );`
 
                 const result = await db.query(query);
 
                 res.status(200).json({
                     message: 'Success',
-                    data: result
+                    data: id
                 });
             } catch (e) {
                 console.log(`[server] ${e}`);
