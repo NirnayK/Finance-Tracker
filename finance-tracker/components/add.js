@@ -1,11 +1,10 @@
 "use client";
 
-import React, {useEffect} from "react";
-import {useQuery} from "react-query";
+import React, { useEffect } from "react";
+import { useQuery } from "react-query";
 
 export default function Add(props) {
   // Form grid using tailwindcss
-
   const [expenseName, setExpenseName] = React.useState("");
   const [amount, setAmount] = React.useState(0);
   const [expenseDate, setExpenseDate] = React.useState("");
@@ -14,20 +13,22 @@ export default function Add(props) {
   const user_id = 1;
 
   const fetchData = async (user_id) => {
-    return await fetch('http://localhost:3000/api/get', {
-      method: 'POST',
+    return await fetch("http://localhost:3000/api/get", {
+      method: "POST",
       headers: {
-        "Content-Type": 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({user_id})
-    }).then(res => res.json());
-  }
+      body: JSON.stringify({ user_id }),
+    }).then((res) => res.json());
+  };
 
-  const {data: data1, error: error1, refetch: refetch1} = useQuery(
-    ['fetchData', user_id],
-    () => fetchData(user_id),
-    {enabled: false}
-  );
+  const {
+    data: data1,
+    error: error1,
+    refetch: refetch1,
+  } = useQuery(["fetchData", user_id], () => fetchData(user_id), {
+    enabled: false,
+  });
 
   useEffect(() => {
     refetch1();
@@ -41,8 +42,7 @@ export default function Add(props) {
   }, [data1]);
 
   useEffect(() => {
-    if (error1)
-      alert(error1);
+    if (error1) alert(error1);
   }, [error1]);
 
   // create functions to handle the change in the input fields
@@ -60,19 +60,19 @@ export default function Add(props) {
   };
 
   const addExpense = async (desc, amount, user_id, date, category) => {
-    return await fetch('http://localhost:3000/api/add/', {
-      method: 'POST',
+    return await fetch("http://localhost:3000/api/add/", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({desc, user_id, amount, date, category})
-    }).then(res => res.json());
-  }
+      body: JSON.stringify({ desc, user_id, amount, date, category }),
+    }).then((res) => res.json());
+  };
 
-  const {data, error, refetch} = useQuery(
-    ['addExpense', expenseName, amount, user_id, expenseDate, category],
+  const { data, error, refetch } = useQuery(
+    ["addExpense", expenseName, amount, user_id, expenseDate, category],
     () => addExpense(expenseName, amount, user_id, expenseDate, category),
-    {enabled: false}
+    { enabled: false }
   );
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function Add(props) {
           expense_date: expenseDate,
           expense_category: category,
         },
-        ...props.data
+        ...props.data,
       ]);
 
       setFlag(false);
@@ -95,13 +95,12 @@ export default function Add(props) {
   }, [flag, data]);
 
   useEffect(() => {
-    if (error)
-      alert(error);
+    if (error) alert(error);
   }, [error]);
 
   return (
     <div className="flex justify-center items-center w-screen h-full max-w-full">
-      <div className=" w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 ">
+      <div className=" w-5/6 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 md:w-2/3">
         <div className="-mx-3 md:flex mb-6">
           <div className="md:w-1/2 px-3 mb-6 md:mb-0">
             <label
@@ -186,8 +185,9 @@ export default function Add(props) {
           type="button"
           className="text-lime-950 bg-lime-400 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
           onClick={() => {
+            
             setFlag(true);
-            refetch().catch(e => console.log('[error] ', e));
+            refetch().catch((e) => console.log("[error] ", e));
           }}
         >
           SUBMIT
