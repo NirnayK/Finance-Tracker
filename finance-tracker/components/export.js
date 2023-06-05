@@ -2,56 +2,7 @@ import React from "react";
 import ExcelLogo from "../app/excel_logo.png";
 
 export default function Show(props) {
-  let data = [
-    {
-      expenseName: "Name 1",
-      expenseAmount: 100,
-      expenseDate: "2021-01-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 2",
-      expenseAmount: 200,
-      expenseDate: "2021-01-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 3",
-      expenseAmount: 300,
-      expenseDate: "2021-01-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 4",
-      expenseAmount: 400,
-      expenseDate: "2021-01-04",
-      expenseCategory: "Category 4",
-    },
-    {
-      expenseName: "Name 5",
-      expenseAmount: 100,
-      expenseDate: "2021-01-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 6",
-      expenseAmount: 200,
-      expenseDate: "2021-01-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 7",
-      expenseAmount: 300,
-      expenseDate: "2021-01-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 8",
-      expenseAmount: 400,
-      expenseDate: "2021-01-04",
-      expenseCategory: "Category 4",
-    },
-  ];
+  let data = [...props.data];
 
   function exportData() {
     const csvRows = [];
@@ -84,7 +35,7 @@ export default function Show(props) {
     <>
       <div>
         <div className="flex justify-center items-center w-screen text-gray-950 max-w-full">
-          <div className="flex flex-col justify-evenly items-center w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 md:flex-row ">
+          <div className="flex flex-col justify-evenly items-center w-5/6 md:w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 md:flex-row ">
             <h1 className="text-centerpb-4 text-xl font-bold my-2 md:my-0">
               Export data to CSV
               <img

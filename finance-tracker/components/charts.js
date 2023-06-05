@@ -3,56 +3,58 @@ import { Doughnut } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 
 function DoughnutChart(props) {
-  let data = [
-    {
-      expenseName: "Name 1",
-      expense_amt: 100,
-      expenseDate: "2021-01-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 2",
-      expense_amt: 200,
-      expenseDate: "2021-02-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 3",
-      expense_amt: 300,
-      expenseDate: "2021-01-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 4",
-      expense_amt: 400,
-      expenseDate: "2021-10-04",
-      expenseCategory: "Category 4",
-    },
-    {
-      expenseName: "Name 5",
-      expense_amt: 100,
-      expenseDate: "2021-02-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 6",
-      expense_amt: 200,
-      expenseDate: "2021-01-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 7",
-      expense_amt: 300,
-      expenseDate: "2021-03-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 8",
-      expense_amt: 400,
-      expenseDate: "2021-01-04",
-      expenseCategory: "Category 4",
-    },
-  ];
+  // let data = [
+  //   {
+  //     expenseName: "Name 1",
+  //     expense_amt: 100,
+  //     expenseDate: "2021-01-01",
+  //     expenseCategory: "Category 1",
+  //   },
+  //   {
+  //     expenseName: "Name 2",
+  //     expense_amt: 200,
+  //     expenseDate: "2021-02-02",
+  //     expenseCategory: "Category 2",
+  //   },
+  //   {
+  //     expenseName: "Name 3",
+  //     expense_amt: 300,
+  //     expenseDate: "2021-01-03",
+  //     expenseCategory: "Category 3",
+  //   },
+  //   {
+  //     expenseName: "Name 4",
+  //     expense_amt: 400,
+  //     expenseDate: "2021-10-04",
+  //     expenseCategory: "Category 4",
+  //   },
+  //   {
+  //     expenseName: "Name 5",
+  //     expense_amt: 100,
+  //     expenseDate: "2021-02-01",
+  //     expenseCategory: "Category 1",
+  //   },
+  //   {
+  //     expenseName: "Name 6",
+  //     expense_amt: 200,
+  //     expenseDate: "2021-01-02",
+  //     expenseCategory: "Category 2",
+  //   },
+  //   {
+  //     expenseName: "Name 7",
+  //     expense_amt: 300,
+  //     expenseDate: "2021-03-03",
+  //     expenseCategory: "Category 3",
+  //   },
+  //   {
+  //     expenseName: "Name 8",
+  //     expense_amt: 400,
+  //     expenseDate: "2021-01-04",
+  //     expenseCategory: "Category 4",
+  //   },
+  // ];
+
+  let data = [...props.data];
 
   // all time data
 
@@ -214,7 +216,8 @@ function DoughnutChart(props) {
   return (
     <>
       <div className="flex justify-center items-center w-screen text-gray-950 max-w-full">
-        <div className="flex flex-col justify-center items-center w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 ">
+        {/* <div className=" w-5/6 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 md:w-2/3"> */}
+        <div className="flex flex-col justify-center items-center w-5/6 md:w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 ">
           {/* <h1>Creating a Doughnut Chart</h1> */}
           <div className="flex flex-col md:flex-row w-full">
             <div className="flex justify-center w-screen max-h-60 md:w-1/3 text-gray-950 max-w-full">
@@ -229,6 +232,7 @@ function DoughnutChart(props) {
             </div>
           </div>
         </div>
+        {/* </div> */}
       </div>
     </>
   );

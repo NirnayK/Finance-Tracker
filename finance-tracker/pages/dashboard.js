@@ -3,6 +3,7 @@ import Add from "../components/add";
 import Show from "../components/show";
 import Export from "../components/export";
 import Charts from "../components/charts";
+import Modals from "../components/modals";
 import React from "react";
 
 export default function Dashboard() {
@@ -11,6 +12,7 @@ export default function Dashboard() {
   // a react form component using tightwindcss
 
   const [data, setData] = React.useState([]);
+  const [show, setShow] = React.useState(false);
 
   return (
     <>
