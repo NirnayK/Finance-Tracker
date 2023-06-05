@@ -11,4 +11,4 @@ Level 1
 <img src="finance-tracker/public/assets/images/lvl1.jpg" alt="Level 1 Dfd">
 
 # ER Diagrams
-<img src="finance-tracker/public/assets/images/ER.jpg" alt="ER Diagram">
+<img src="finance-tracker/public/assets/images/ER.png" alt="ER Diagram">
