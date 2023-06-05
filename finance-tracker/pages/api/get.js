@@ -5,7 +5,7 @@ export default async function handler(req, res) {
         if (req.body.user_id && !isNaN(req.body.user_id)) {
             const q = `SELECT * FROM expenses WHERE user_id=${req.body.user_id}`;
             try {
-                const result = await db.query(`DROP TABLE users`);
+                const result = await db.query(q);
                 res.status(200).json({data: result.rows});
             } catch (e) {
                 console.log(`[server] ${e.toString()}`);
@@ -19,16 +19,16 @@ export default async function handler(req, res) {
 
 
 /*
-CREATE TABLE expenses
+                CREATE TABLE expenses
                     (
                         expense_id       char(36)     NOT NULL,
                         expense_desc     varchar(255) NOT NULL,
-                        user_id          INT          NOT NULL,
+                        email            varchar(255) NOT NULL,
                         expense_amt      REAL         NOT NULL,
                         expense_date     DATE         NOT NULL,
                         expense_category Category NOT NULL,
                         PRIMARY KEY (expense_id),
-                        FOREIGN KEY (user_id) REFERENCES users (user_id)
+                        FOREIGN KEY (email) REFERENCES users (email)
                     );
 
 CREATE TABLE users (

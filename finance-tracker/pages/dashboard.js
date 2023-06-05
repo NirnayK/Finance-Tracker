@@ -19,14 +19,15 @@ export default function Dashboard() {
   const [show, setShow] = React.useState(false);
 
   return (
-    <QueryClientProvider client={new QueryClient()}>
-      <CustomSessionProvider>
-        <Navbar/>
-        <Add data={data} set={(d) => setData(d)}/>
-        <Charts data={data}/>
-        <Show data={data}/>
-        <Export data={data}/>
-      </CustomSessionProvider>
-    </QueryClientProvider>
-  );
+    // <QueryClientProvider client={new QueryClient()}>
+    //   <CustomSessionProvider>
+    <>
+      <Navbar/>
+      <Add data={data} set={(d) => setData(d)}/>
+      <Charts data={data}/>
+      <Show data={data}/>
+      <Export data={data}/>
+    </>
+  )
+  ;
 }
