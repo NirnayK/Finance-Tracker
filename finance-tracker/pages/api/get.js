@@ -5,7 +5,12 @@ export default async function handler(req, res) {
         if (req.body.user_id && !isNaN(req.body.user_id)) {
             const q = `SELECT * FROM expenses WHERE user_id=${req.body.user_id}`;
             try {
-                const result = await db.query(q);
+                const result = await db.query(`CREATE TABLE users (
+                    user_name varchar(255) NOT NULL,
+                    phone_num char(10)     NOT NULL UNIQUE,
+                    email     varchar(255) NOT NULL UNIQUE,
+                    PRIMARY KEY (email)
+                );`);
                 res.status(200).json({data: result.rows});
             } catch (e) {
                 console.log(`[server] ${e.toString()}`);

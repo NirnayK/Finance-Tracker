@@ -69,13 +69,13 @@ function DoughnutChart(props) {
     return total;
   }, 0);
   const sum_category3 = data.reduce((total, item) => {
-    if (item.expenseCategory === "Category 3") {
+    if (item.expenseCategory === "Shopping") {
       total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_category4 = data.reduce((total, item) => {
-    if (item.expenseCategory === "Category 4") {
+    if (item.expenseCategory === "Travel") {
       total += item.expense_amt;
     }
     return total;
