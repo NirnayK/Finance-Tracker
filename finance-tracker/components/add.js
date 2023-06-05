@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import {useQuery} from "react-query";
 
 export default function Add(props) {
   // Form grid using tailwindcss
@@ -10,8 +10,9 @@ export default function Add(props) {
   const [amount, setAmount] = React.useState("");
   const [expenseDate, setExpenseDate] = React.useState("");
   const [category, setCategory] = React.useState("");
+  const user_id = 1;
 
-  // create fucntions to handle the change in the input fields
+  // create functions to handle the change in the input fields
   const handleExpenseNameChange = (event) => {
     setExpenseName(event.target.value);
   };
@@ -24,6 +25,42 @@ export default function Add(props) {
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
   };
+
+  const addExpense = async (desc, amount, user_id, date, category) => {
+    return await fetch('http://localhost:3000/api/add/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({desc, user_id, amount, date, category})
+    }).then(res => res.json());
+  }
+
+  const {data, error, refetch} = useQuery(
+    ['addExpense', expenseName, amount, user_id, expenseDate, category],
+    () => addExpense(expenseName, amount, user_id, expenseDate, category),
+    {enabled: false}
+  );
+
+  if (data) {
+    if (data.error) {
+      alert(Object.values(data.error)[0]);
+    } else {
+      props.set([...props.data,
+        {
+          expense_id: data.data,
+          expenseName: expenseName,
+          expenseAmount: amount,
+          expenseDate: expenseDate,
+          expenseCategory: category,
+        }
+      ]);
+    }
+  }
+
+  if (error) {
+    alert(error);
+  }
 
   return (
     <div className="flex justify-center items-center w-screen h-full max-w-full">
@@ -96,6 +133,7 @@ export default function Add(props) {
                 value={category}
                 onChange={handleCategoryChange}
               >
+                <option></option>
                 <option>Miscellaneous</option>
                 <option>Entertainment</option>
                 <option>Shopping</option>
@@ -111,14 +149,7 @@ export default function Add(props) {
           type="button"
           className="text-lime-950 bg-lime-400 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
           onClick={() => {
-            props.data.push({
-              expenseName: expenseName,
-              expenseAmount: amount,
-              expenseDate: expenseDate,
-              expenseCategory: category,
-            });
-
-            props.set([...props.data]);
+            refetch().catch(e => console.log('[error] ', e));
           }}
         >
           SUBMIT
