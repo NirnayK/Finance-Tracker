@@ -30,4 +30,11 @@ CREATE TABLE expenses
                         PRIMARY KEY (expense_id),
                         FOREIGN KEY (user_id) REFERENCES users (user_id)
                     );
+
+CREATE TABLE users (
+                    user_name varchar(255) NOT NULL,
+                    phone_num char(10)     NOT NULL UNIQUE,
+                    email     varchar(255) NOT NULL UNIQUE,
+                    PRIMARY KEY (email)
+                );
  */
