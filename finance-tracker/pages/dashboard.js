@@ -8,9 +8,7 @@ import Modals from "../components/modals";
 import React from "react";
 import Navbar from '@/components/NavBar';
 import CustomSessionProvider from '@/components/CustomSessionProvider';
-import { QueryClient, QueryClientProvider } from "react-query";
 
-const query = new QueryClient();
 export default function Dashboard() {
   //   dashboard page to a financial tracker app using tailwindcss with option to add delete and update the finances
 
