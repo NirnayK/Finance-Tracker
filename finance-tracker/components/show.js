@@ -1,61 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 // import { useRouter } from "next/router";
 
 // import DataCards from "./dataCards";
 
 export default function Show(props) {
-  let data = [
-    {
-      expenseName: "Name 1",
-      expenseAmount: 100,
-      expenseDate: "2021-01-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 2",
-      expenseAmount: 200,
-      expenseDate: "2021-01-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 3",
-      expenseAmount: 300,
-      expenseDate: "2021-01-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 4",
-      expenseAmount: 400,
-      expenseDate: "2021-01-04",
-      expenseCategory: "Category 4",
-    },
-    {
-      expenseName: "Name 5",
-      expenseAmount: 100,
-      expenseDate: "2021-01-01",
-      expenseCategory: "Category 1",
-    },
-    {
-      expenseName: "Name 6",
-      expenseAmount: 200,
-      expenseDate: "2021-01-02",
-      expenseCategory: "Category 2",
-    },
-    {
-      expenseName: "Name 7",
-      expenseAmount: 300,
-      expenseDate: "2021-01-03",
-      expenseCategory: "Category 3",
-    },
-    {
-      expenseName: "Name 8",
-      expenseAmount: 400,
-      expenseDate: "2021-01-04",
-      expenseCategory: "Category 4",
-    },
-  ];
-
-  data = [...props.data, ...data];
+  useEffect(() => {
+    console.log(props.data);
+  }, [props]);
 
   //   const router = useRouter();
 
@@ -85,48 +36,49 @@ export default function Show(props) {
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-100">
-                        <tr className="border-b border-slate-300">
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider "
-                          >
-                            Name
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
-                          >
-                            Amount
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
-                          >
-                            Date
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
-                          >
-                            Category
-                          </th>
-                          <th scope="col" className="relative px-6 py-3">
-                            <span className="sr-only">Edit</span>
-                          </th>
-                          {/* <th
+                      <tr className="border-b border-slate-300">
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider "
+                        >
+                          Name
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
+                        >
+                          Amount
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
+                        >
+                          Date
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
+                        >
+                          Category
+                        </th>
+                        <th scope="col" className="relative px-6 py-3">
+                          <span className="sr-only">Edit</span>
+                        </th>
+                        {/* <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
                           >
                             Export Data
                           </th> */}
-                          <th scope="col" className="relative px-6 py-3">
-                            <span className="sr-only">Delete</span>
-                          </th>
-                        </tr>
+                        <th scope="col" className="relative px-6 py-3">
+                          <span className="sr-only">Delete</span>
+                        </th>
+                      </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {data.map((item) => (
-                          <tr key={item}>
+                      {props.data.map((item) => {
+                        const d = new Date(item.expense_date);
+                        return (<tr key={item.expense_id}>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex items-center">
                                 {/* <div className="flex-shrink-0 h-10 w-10">
@@ -138,7 +90,7 @@ export default function Show(props) {
                                 </div> */}
                                 {/* <div className="ml-4"> */}
                                 <div className="text-sm font-medium text-gray-900">
-                                  {item.expenseName}
+                                  {item.expense_desc}
                                 </div>
                                 {/* <div className="text-sm text-gray-950">
                                     {item.expenseAmount}
@@ -148,7 +100,7 @@ export default function Show(props) {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm text-gray-900">
-                                {item.expenseAmount}
+                                {item.expense_amt}
                               </div>
                               {/* <div className="text-sm text-gray-950">
                                 {item.expenseCategory}
@@ -159,11 +111,11 @@ export default function Show(props) {
                                 className="px-2 inline-flex text-xs leading-5
                       font-semibold rounded-full bg-lime-100 text-lime-800"
                               >
-                                {item.expenseDate}
+                                {d.toDateString()}
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-950">
-                              {item.expenseCategory}
+                              {item.expense_category}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <a
@@ -182,7 +134,8 @@ export default function Show(props) {
                               </a>
                             </td>
                           </tr>
-                        ))}
+                        )
+                      })}
                       </tbody>
                     </table>
                   </div>

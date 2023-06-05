@@ -2,53 +2,53 @@ import Chart from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 
-function DoughnutChart() {
+function DoughnutChart(props) {
   let data = [
     {
       expenseName: "Name 1",
-      expenseAmount: 100,
+      expense_amt: 100,
       expenseDate: "2021-01-01",
       expenseCategory: "Category 1",
     },
     {
       expenseName: "Name 2",
-      expenseAmount: 200,
+      expense_amt: 200,
       expenseDate: "2021-02-02",
       expenseCategory: "Category 2",
     },
     {
       expenseName: "Name 3",
-      expenseAmount: 300,
+      expense_amt: 300,
       expenseDate: "2021-01-03",
       expenseCategory: "Category 3",
     },
     {
       expenseName: "Name 4",
-      expenseAmount: 400,
+      expense_amt: 400,
       expenseDate: "2021-10-04",
       expenseCategory: "Category 4",
     },
     {
       expenseName: "Name 5",
-      expenseAmount: 100,
+      expense_amt: 100,
       expenseDate: "2021-02-01",
       expenseCategory: "Category 1",
     },
     {
       expenseName: "Name 6",
-      expenseAmount: 200,
+      expense_amt: 200,
       expenseDate: "2021-01-02",
       expenseCategory: "Category 2",
     },
     {
       expenseName: "Name 7",
-      expenseAmount: 300,
+      expense_amt: 300,
       expenseDate: "2021-03-03",
       expenseCategory: "Category 3",
     },
     {
       expenseName: "Name 8",
-      expenseAmount: 400,
+      expense_amt: 400,
       expenseDate: "2021-01-04",
       expenseCategory: "Category 4",
     },
@@ -56,27 +56,27 @@ function DoughnutChart() {
 
   // all time data
 
-  const sum_category1 = data.reduce((total, item) => {
-    if (item.expenseCategory === "Category 1") {
-      total += item.expenseAmount;
+  const sum_category1 = props.data.reduce((total, item) => {
+    if (item.expense_category === "Miscellaneous") {
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_category2 = data.reduce((total, item) => {
-    if (item.expenseCategory === "Category 2") {
-      total += item.expenseAmount;
+    if (item.expense_category === "Entertainment") {
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_category3 = data.reduce((total, item) => {
     if (item.expenseCategory === "Category 3") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_category4 = data.reduce((total, item) => {
     if (item.expenseCategory === "Category 4") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
@@ -97,73 +97,73 @@ function DoughnutChart() {
 
   const sum_jan = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "01") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_feb = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "02") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_mar = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "03") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_april = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "04") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_may = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "05") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_june = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "06") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_july = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "07") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_aug = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "08") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_sept = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "09") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_oct = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "10") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_nov = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "11") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);
   const sum_dec = data.reduce((total, item) => {
     if (item.expenseDate.slice(5, 7) === "12") {
-      total += item.expenseAmount;
+      total += item.expense_amt;
     }
     return total;
   }, 0);

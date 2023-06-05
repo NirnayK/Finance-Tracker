@@ -1,5 +1,5 @@
 import NextAuth from "next-auth"
-import clientPromise from "@/lib/mongodb"
+// import clientPromise from "@/lib/mongodb"
 import GoogleProvider from 'next-auth/providers/google';
 
 const handler = NextAuth({
