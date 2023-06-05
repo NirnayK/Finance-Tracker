@@ -35,7 +35,7 @@ export default function Show(props) {
     <>
       <div>
         <div className="flex justify-center items-center w-screen text-gray-950 max-w-full">
-          <div className="flex flex-col justify-evenly items-center w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 md:flex-row ">
+          <div className="flex flex-col justify-evenly items-center w-5/6 md:w-2/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-2 md:flex-row ">
             <h1 className="text-centerpb-4 text-xl font-bold my-2 md:my-0">
               Export data to CSV
               <img
