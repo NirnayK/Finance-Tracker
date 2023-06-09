@@ -63,7 +63,7 @@ export default function Show(props) {
   const [open, setOpen] = useState(props.show);
   useEffect(() => {
     console.log(props.data);
-  }, [props]);
+  }, [props.data]);
 
   //   useEffect(() => {
   //     props.set(false);
