@@ -40,7 +40,7 @@ export default function Add(props) {
 
   useEffect(() => {
     if (data1 && data1.data) {
-      console.log(data1.data.reverse());
+      console.log(data1.data);
       props.set(data1.data);
     }
   }, [data1]);
