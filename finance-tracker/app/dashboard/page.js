@@ -3,7 +3,7 @@ import Add from "@/components/add";
 import Show from "@/components/show";
 import Export from "@/components/export";
 import Charts from "@/components/charts";
-import { useState, useEffect } from "react";
+import {useState, useEffect, useMemo} from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -29,6 +29,23 @@ export default function Dashboard() {
     }
   }, [status, session, router]);
 
+  const data1 = useMemo(() => {
+    const d = [];
+
+    for (let k of Object.keys(data)) {
+      d.push({
+        expense_id: k,
+        ...data[k],
+      });
+    }
+
+    d.sort((a, b) => {
+      return new Date(b.expense_date) - new Date(a.expense_date);
+    });
+
+    return d;
+  }, [data]);
+
   if (status === "loading") {
     // Display loading state
     return <p>Loading...</p>;
@@ -42,9 +59,9 @@ export default function Dashboard() {
   return (
     <QueryClientProvider client={new QueryClient()}>
       <Add data={data} set={(d) => setData(d)} />
-      <Charts data={data} />
-      <Show data={data} />
-      <Export data={data} />
+      <Charts data={data1} />
+      <Show data={data1} />
+      <Export data={data1} />
     </QueryClientProvider>
   );
 }

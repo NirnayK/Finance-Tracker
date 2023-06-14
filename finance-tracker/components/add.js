@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
+import {useSession} from "next-auth/react";
 
 export default function Add(props) {
   // Form grid using tailwindcss
@@ -10,15 +11,16 @@ export default function Add(props) {
   const [expenseDate, setExpenseDate] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [flag, setFlag] = React.useState(false);
-  const user_id = 1;
 
-  const fetchData = async (user_id) => {
+  const { data: session } = useSession();
+
+  const fetchData = async (email) => {
     return await fetch("http://localhost:3000/api/get", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user_id }),
+      body: JSON.stringify({ email }),
     }).then((res) => res.json());
   };
 
@@ -26,7 +28,7 @@ export default function Add(props) {
     data: data1,
     error: error1,
     refetch: refetch1,
-  } = useQuery(["fetchData", user_id], () => fetchData(user_id), {
+  } = useQuery(["fetchData", session.user.email], () => fetchData(session.user.email), {
     enabled: false,
   });
 
@@ -36,7 +38,7 @@ export default function Add(props) {
 
   useEffect(() => {
     if (data1 && data1.data) {
-      console.log(data1.data.reverse());
+      console.log(data1.data);
       props.set(data1.data);
     }
   }, [data1]);
@@ -59,19 +61,19 @@ export default function Add(props) {
     setCategory(event.target.value);
   };
 
-  const addExpense = async (desc, amount, user_id, date, category) => {
+  const addExpense = async (desc, amount, email, date, category) => {
     return await fetch("http://localhost:3000/api/add/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ desc, user_id, amount, date, category }),
+      body: JSON.stringify({ desc, email, amount, date, category }),
     }).then((res) => res.json());
   };
 
   const { data, error, refetch } = useQuery(
-    ["addExpense", expenseName, amount, user_id, expenseDate, category],
-    () => addExpense(expenseName, amount, user_id, expenseDate, category),
+    ["addExpense", expenseName, amount, session.user.email, expenseDate, category],
+    () => addExpense(expenseName, amount, session.user.email, expenseDate, category),
     { enabled: false }
   );
 
@@ -79,16 +81,15 @@ export default function Add(props) {
     if (data && data.error) {
       alert(Object.values(data.error)[0]);
     } else if (flag && data && data.data) {
-      props.set([
-        {
-          expense_id: data.data,
+      props.set({
+        [data.data]: {
           expense_desc: expenseName,
           expense_amt: amount,
           expense_date: expenseDate,
           expense_category: category,
         },
         ...props.data,
-      ]);
+      });
 
       setFlag(false);
     }

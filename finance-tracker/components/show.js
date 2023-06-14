@@ -61,9 +61,6 @@ export default function Show(props) {
   // let data = [...props.data];
   const [show, setShow] = React.useState(false);
   const [open, setOpen] = useState(props.show);
-  useEffect(() => {
-    console.log(props.data);
-  }, [props]);
 
   //   useEffect(() => {
   //     props.set(false);
@@ -73,7 +70,6 @@ export default function Show(props) {
   const [item, setItem] = useState({});
 
   // useEffect(() => {}, [show]);
-
   return (
     <>
       {/* <div className="App h-screen flex flex-col items-center justify-center bg-purple-200"> */}
@@ -208,7 +204,7 @@ export default function Show(props) {
       {/* modal starts */}
       <>
         {/* <button
-        className="bg-blue-200 text-black active:bg-blue-500 
+        className="bg-blue-200 text-black active:bg-blue-500
       font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
         type="button"
         onClick={() => setOpen(true)}
