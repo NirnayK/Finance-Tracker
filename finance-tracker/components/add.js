@@ -11,10 +11,8 @@ export default function Add(props) {
   const [expenseDate, setExpenseDate] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [flag, setFlag] = React.useState(false);
-  const user_id = 1;
-  const { data: session } = useSession();
 
-  console.log(session);
+  const { data: session } = useSession();
 
   const fetchData = async (email) => {
     return await fetch("http://localhost:3000/api/get", {
@@ -63,19 +61,19 @@ export default function Add(props) {
     setCategory(event.target.value);
   };
 
-  const addExpense = async (desc, amount, user_id, date, category) => {
+  const addExpense = async (desc, amount, email, date, category) => {
     return await fetch("http://localhost:3000/api/add/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ desc, user_id, amount, date, category }),
+      body: JSON.stringify({ desc, email, amount, date, category }),
     }).then((res) => res.json());
   };
 
   const { data, error, refetch } = useQuery(
-    ["addExpense", expenseName, amount, user_id, expenseDate, category],
-    () => addExpense(expenseName, amount, user_id, expenseDate, category),
+    ["addExpense", expenseName, amount, session.user.email, expenseDate, category],
+    () => addExpense(expenseName, amount, session.user.email, expenseDate, category),
     { enabled: false }
   );
 
@@ -83,16 +81,15 @@ export default function Add(props) {
     if (data && data.error) {
       alert(Object.values(data.error)[0]);
     } else if (flag && data && data.data) {
-      props.set([
-        {
-          expense_id: data.data,
+      props.set({
+        [data.data]: {
           expense_desc: expenseName,
           expense_amt: amount,
           expense_date: expenseDate,
           expense_category: category,
         },
         ...props.data,
-      ]);
+      });
 
       setFlag(false);
     }
