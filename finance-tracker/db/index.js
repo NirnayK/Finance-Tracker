@@ -1,12 +1,13 @@
 import { Pool } from 'pg';
+import config from './config';
 
 const pool = new Pool({
     max: 300,
     connectionTimeoutMillis: 5000,
-    host: 'c.sga556cc75308043abbbd4cadbb5ac6027.postgres.database.azure.com',
+    host: config.HOST_NAME,
     port: 5432,
-    user: 'citus',
-    password: 'LNMimadY20',
+    user: config.user,
+    password: config.password,
     database: 'citus',
     ssl: true,
 });
