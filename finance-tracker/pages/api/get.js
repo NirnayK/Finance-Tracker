@@ -31,24 +31,6 @@ export default async function handler(req, res) {
     } else {
       res.status(200).json({email: "Please provide a valid email"});
     }
-  } else if (req.method === "GET") {
-    const q = `
-      CREATE TABLE expenses
-                    (
-                        expense_id       char(36)     NOT NULL,
-                        expense_desc     varchar(255) NOT NULL,
-                        email            varchar(255) NOT NULL,
-                        expense_amt      REAL         NOT NULL,
-                        expense_date     DATE         NOT NULL,
-                        expense_category Category NOT NULL,
-                        PRIMARY KEY (expense_id),
-                        FOREIGN KEY (email) REFERENCES users (email)
-                    );
-    `;
-
-    const result = await db.query(q);
-
-    res.json({ data: result });
   }
 }
 

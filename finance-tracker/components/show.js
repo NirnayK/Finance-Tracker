@@ -4,6 +4,7 @@ import Modal from "./modal";
 import Modals from "./modals";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import {useQuery} from "react-query";
 // import DataCards from "./dataCards";
 
 export default function Show(props) {
@@ -59,17 +60,70 @@ export default function Show(props) {
   // ];
 
   // let data = [...props.data];
-  const [show, setShow] = React.useState(false);
-  const [open, setOpen] = useState(props.show);
+  const [open, setOpen] = useState(false);
+  const [expID, setExpID] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newAmt, setNewAmt] = useState(0);
+  const [newCat, setNewCat] = useState("");
+  const [newDate, setNewDate] = useState("");
 
-  //   useEffect(() => {
-  //     props.set(false);
-  //   }, [open]);
+  const editExpense = async (expense_id, desc, amount, date, category) => {
+    return await fetch("http://localhost:3000/api/edit/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ expense_id, desc, amount, date, category }),
+    }).then((res) => res.json());
+  };
+
+  const { data, error, refetch } = useQuery(
+    ["addExpense", expID, newName, newAmt, newDate, newCat],
+    () => editExpense(expID, newName, newAmt, newDate, newCat),
+    { enabled: false }
+  );
 
   const cancelButtonRef = useRef(null);
-  const [item, setItem] = useState({});
 
-  // useEffect(() => {}, [show]);
+  useEffect(() => {
+    if (data) {
+      if (data && data.error) {
+        alert(Object.values(data.error)[0]);
+      } else {
+        let d = {};
+
+        if (newName) {
+          d = {
+            [expID]: {
+              expense_desc: newName,
+              expense_amt: newAmt,
+              expense_category: newCat,
+              expense_date: newDate
+            }
+          };
+
+          props.set(d);
+        }
+      }
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
+
+  const handleAmountChange = (event) => {
+    setNewAmt(Number.parseFloat(event.target.value));
+  };
+  const handleExpenseDateChange = (event) => {
+    setNewDate(event.target.value);
+  };
+  const handleCategoryChange = (event) => {
+    setNewCat(event.target.value);
+  };
+
   return (
     <>
       {/* <div className="App h-screen flex flex-col items-center justify-center bg-purple-200"> */}
@@ -177,7 +231,14 @@ export default function Show(props) {
                               > */}
                                 <button
                                   className="text-red-500"
-                                  onClick={() => setOpen(true)}
+                                  onClick={() => {
+                                    setExpID(item.expense_id);
+                                    setNewName(item.expense_desc);
+                                    setNewCat(item.expense_category);
+                                    setNewAmt(item.expense_amt);
+                                    setNewDate(item.expense_date.slice(0, 10));
+                                    setOpen(true);
+                                  }}
                                 >
                                   Edit
                                 </button>
@@ -211,7 +272,7 @@ export default function Show(props) {
       >
         New Modal
       </button> */}
-        <Transition.Root show={show} as={Fragment}>
+        <Transition.Root show={open} as={Fragment}>
           <Dialog
             as="div"
             className="relative z-10"
@@ -245,7 +306,14 @@ export default function Show(props) {
                     {/* add my new element */}
                     <button
                       className="bg-transparent border-0 text-black float-right"
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setExpID("");
+                        setNewName('');
+                        setNewCat('');
+                        setNewAmt(0);
+                        setNewDate('');
+                        setOpen(false);
+                      }}
                     >
                       <span className="text-black opacity-7 h-6 w-6 font-xl block text-xl m-1 rounded-full">
                         X
@@ -266,8 +334,10 @@ export default function Show(props) {
                               id="grid-first-name"
                               type="text"
                               placeholder="Expense Name"
-                              //   value={expenseName}
-                              //   onChange={handleExpenseNameChange}
+                              value={newName}
+                              onChange={(e) => {
+                                setNewName(e.target.value);
+                              }}
                             />
                             {/* <p className="text-red text-xs italic">Amount</p> */}
                           </div>
@@ -283,8 +353,8 @@ export default function Show(props) {
                               id="grid-last-name"
                               type="number"
                               placeholder="Amount"
-                              //   value={amount}
-                              //   onChange={handleAmountChange}
+                              value={newAmt}
+                              onChange={handleAmountChange}
                             />
                           </div>
                         </div>
@@ -301,8 +371,8 @@ export default function Show(props) {
                               id="grid-first-name"
                               type="date"
                               placeholder="Expense Date"
-                              //   value={expenseDate}
-                              //   onChange={handleExpenseDateChange}
+                                value={newDate}
+                                onChange={handleExpenseDateChange}
                             />
                             {/* <p className="text-red text-xs italic">Amount</p> */}
                           </div>
@@ -318,13 +388,15 @@ export default function Show(props) {
                               <select
                                 className="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-gray-950 py-3 px-4 pr-8 rounded"
                                 id="grid-state"
-                                // value={category}
-                                // onChange={handleCategoryChange}
+                                value={newCat}
+                                onChange={handleCategoryChange}
                               >
-                                <option>Category 1</option>
-                                <option>Category 2</option>
-                                <option>Category 3</option>
-                                <option>Category 4</option>
+                                <option></option>
+                                <option>Miscellaneous</option>
+                                <option>Entertainment</option>
+                                <option>Shopping</option>
+                                <option>Groceries</option>
+                                <option>Travel</option>
                               </select>
                               <div className="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-gray-950"></div>
                             </div>
@@ -335,15 +407,11 @@ export default function Show(props) {
                             type="button"
                             className=" w-1/2 text-red-950 bg-red-400 focus:ring-red-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
                             onClick={() => {
-                              // props.set([
-                              //   ...props.data,
-                              //   {
-                              //     expenseName: expenseName,
-                              //     expenseAmount: amount,
-                              //     expenseDate: expenseDate,
-                              //     expenseCategory: category,
-                              //   },
-                              // ]);
+                              setExpID("");
+                              setNewName('');
+                              setNewCat('');
+                              setNewAmt(0);
+                              setNewDate('');
                               setOpen(false);
                             }}
                           >
@@ -353,16 +421,8 @@ export default function Show(props) {
                             type="button"
                             className=" w-1/2 text-lime-950 bg-lime-400 focus:ring-lime-300 font-2xl font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
                             onClick={() => {
-                              // props.set([
-                              //   ...props.data,
-                              //   {
-                              //     expenseName: expenseName,
-                              //     expenseAmount: amount,
-                              //     expenseDate: expenseDate,
-                              //     expenseCategory: category,
-                              //   },
-                              // ]);
                               setOpen(false);
+                              refetch().catch(err => console.log("[error]: ", err));
                             }}
                           >
                             SUBMIT
