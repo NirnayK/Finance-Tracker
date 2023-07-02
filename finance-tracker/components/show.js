@@ -2,8 +2,8 @@ import React from "react";
 // import { useRouter } from "next/router";
 import Modal from "./modal";
 import Modals from "./modals";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import {Fragment, useEffect, useRef, useState} from "react";
+import {Dialog, Transition} from "@headlessui/react";
 import {useQuery} from "react-query";
 // import DataCards from "./dataCards";
 
@@ -60,6 +60,7 @@ export default function Show(props) {
   // ];
 
   // let data = [...props.data];
+  const [del, setDel] = useState(false);
   const [open, setOpen] = useState(false);
   const [expID, setExpID] = useState("");
   const [newName, setNewName] = useState("");
@@ -73,17 +74,55 @@ export default function Show(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ expense_id, desc, amount, date, category }),
+      body: JSON.stringify({expense_id, desc, amount, date, category}),
     }).then((res) => res.json());
   };
 
-  const { data, error, refetch } = useQuery(
+  const {data, error, refetch} = useQuery(
     ["addExpense", expID, newName, newAmt, newDate, newCat],
     () => editExpense(expID, newName, newAmt, newDate, newCat),
-    { enabled: false }
+    {enabled: false}
+  );
+
+  const deleteExpense = async (expense_id) => {
+    return await fetch("http://localhost:3000/api/delete/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({expense_id}),
+    }).then((res) => res.json());
+  };
+
+  const {data: data1, error: error1, refetch: refetch1} = useQuery(
+    ["addExpense", expID],
+    () => deleteExpense(expID),
+    {enabled: false}
   );
 
   const cancelButtonRef = useRef(null);
+
+  useEffect(() => {
+    console.log(props.data);
+  }, [props.data]);
+
+  useEffect(() => {
+    if (data1) {
+      if (data1 && data1.error) {
+        alert(Object.values(data1.error)[0]);
+      } else {
+        props.delete(expID);
+        setExpID("");
+        console.log(data1);
+      }
+    }
+  }, [data1]);
+
+  useEffect(() => {
+    if (error1) {
+      alert(error1);
+    }
+  }, [error1]);
 
   useEffect(() => {
     if (data) {
@@ -107,6 +146,13 @@ export default function Show(props) {
       }
     }
   }, [data]);
+
+  useEffect(() => {
+    if (expID && del) {
+      refetch1().catch(err => alert(err));
+      setDel(false);
+    }
+  }, [del, expID, refetch1]);
 
   useEffect(() => {
     if (error) {
@@ -139,117 +185,122 @@ export default function Show(props) {
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-100">
-                        <tr className="border-b border-slate-300">
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider "
-                          >
-                            Name
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
-                          >
-                            Amount
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
-                          >
-                            Date
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
-                          >
-                            Category
-                          </th>
-                          <th scope="col" className="relative px-6 py-3">
-                            <span className="sr-only">Edit</span>
-                          </th>
-                          {/* <th
+                      <tr className="border-b border-slate-300">
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider "
+                        >
+                          Name
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
+                        >
+                          Amount
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
+                        >
+                          Date
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
+                        >
+                          Category
+                        </th>
+                        <th scope="col" className="relative px-6 py-3">
+                          <span className="sr-only">Edit</span>
+                        </th>
+                        {/* <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray-950 uppercase tracking-wider"
                           >
                             Export Data
                           </th> */}
-                          <th scope="col" className="relative px-6 py-3">
-                            <span className="sr-only">Delete</span>
-                          </th>
-                        </tr>
+                        <th scope="col" className="relative px-6 py-3">
+                          <span className="sr-only">Delete</span>
+                        </th>
+                      </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {props.data.map((item) => {
-                          const d = new Date(item.expense_date);
-                          return (
-                            <tr key={item.expense_id}>
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="flex items-center">
-                                  {/* <div className="flex-shrink-0 h-10 w-10">
+                      {props.data.map((item) => {
+                        const d = new Date(item.expense_date);
+                        return (
+                          <tr key={item.expense_id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                {/* <div className="flex-shrink-0 h-10 w-10">
                                   <img
                                     className="h-10 w-10 rounded-full"
                                     src={person.image}
                                     alt=""
                                   />
                                 </div> */}
-                                  {/* <div className="ml-4"> */}
-                                  <div className="text-sm font-medium text-gray-900">
-                                    {item.expense_desc}
-                                  </div>
-                                  {/* <div className="text-sm text-gray-950">
-                                    {item.expenseAmount}
-                                  </div> */}
-                                  {/* </div> */}
-                                </div>
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="text-sm text-gray-900">
-                                  {item.expense_amt}
+                                {/* <div className="ml-4"> */}
+                                <div className="text-sm font-medium text-gray-900">
+                                  {item.expense_desc}
                                 </div>
                                 {/* <div className="text-sm text-gray-950">
+                                    {item.expenseAmount}
+                                  </div> */}
+                                {/* </div> */}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">
+                                {item.expense_amt}
+                              </div>
+                              {/* <div className="text-sm text-gray-950">
                                 {item.expenseCategory}
                               </div> */}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap">
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
                                 <span
                                   className="px-2 inline-flex text-xs leading-5
                       font-semibold rounded-full bg-lime-100 text-lime-800"
                                 >
                                   {d.toDateString()}
                                 </span>
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-950">
-                                {item.expense_category}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                {/* <a
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-950">
+                              {item.expense_category}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              {/* <a
                                 className="text-indigo-600 hover:text-indigo-900"
                                 onClick={
                                   // toggle models
                                   setShow(true)
                                 }
                               > */}
-                                <button
-                                  className="text-red-500"
-                                  onClick={() => {
-                                    setExpID(item.expense_id);
-                                    setNewName(item.expense_desc);
-                                    setNewCat(item.expense_category);
-                                    setNewAmt(item.expense_amt);
-                                    setNewDate(item.expense_date.slice(0, 10));
-                                    setOpen(true);
-                                  }}
-                                >
-                                  Edit
-                                </button>
-                                {/* </a> */}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button onClick={() => {}}>Delete</button>
-                              </td>
-                            </tr>
-                          );
-                        })}
+                              <button
+                                className="text-red-500"
+                                onClick={() => {
+                                  setExpID(item.expense_id);
+                                  setNewName(item.expense_desc);
+                                  setNewCat(item.expense_category);
+                                  setNewAmt(item.expense_amt);
+                                  setNewDate(item.expense_date.slice(0, 10));
+                                  setOpen(true);
+                                }}
+                              >
+                                Edit
+                              </button>
+                              {/* </a> */}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button onClick={() => {
+                                setExpID(item.expense_id);
+                                setDel(true);
+                              }}>
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                       </tbody>
                     </table>
                   </div>
@@ -288,7 +339,7 @@ export default function Show(props) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
             </Transition.Child>
 
             <div className="flex items-center justify-center fixed inset-0 z-10 overflow-y-auto">
@@ -302,7 +353,8 @@ export default function Show(props) {
                   leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
-                  <Dialog.Panel className="w-11/12 relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8  sm:w-full sm:max-w-lg ">
+                  <Dialog.Panel
+                    className="w-11/12 relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8  sm:w-full sm:max-w-lg ">
                     {/* add my new element */}
                     <button
                       className="bg-transparent border-0 text-black float-right"
@@ -371,8 +423,8 @@ export default function Show(props) {
                               id="grid-first-name"
                               type="date"
                               placeholder="Expense Date"
-                                value={newDate}
-                                onChange={handleExpenseDateChange}
+                              value={newDate}
+                              onChange={handleExpenseDateChange}
                             />
                             {/* <p className="text-red text-xs italic">Amount</p> */}
                           </div>
@@ -398,7 +450,8 @@ export default function Show(props) {
                                 <option>Groceries</option>
                                 <option>Travel</option>
                               </select>
-                              <div className="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-gray-950"></div>
+                              <div
+                                className="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-gray-950"></div>
                             </div>
                           </div>
                         </div>

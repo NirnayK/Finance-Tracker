@@ -4,18 +4,17 @@ import Show from "@/components/show";
 import Export from "@/components/export";
 import Charts from "@/components/charts";
 import {useState, useEffect, useMemo} from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 export default function Dashboard() {
   //   dashboard page to a financial tracker app using tailwindcss with option to add delete and update the finances
 
   // a react form component using tightwindcss
   const router = useRouter();
-  const { data: session, status } = useSession();
-  const [data, setData] = useState([]);
-  const [show, setShow] = useState(false);
+  const {data: session, status} = useSession();
+  const [data, setData] = useState({});
 
   useEffect(() => {
     if (status === "loading") {
@@ -58,10 +57,27 @@ export default function Dashboard() {
 
   return (
     <QueryClientProvider client={new QueryClient()}>
-      <Add data={data} set={(d) => setData(d)} />
-      <Charts data={data1} />
-      <Show data={data1} set={(d) => setData(dt => ({...dt, ...d}))}/>
-      <Export data={data1} />
+      <Add data={data} set={(d) => setData(d)}/>
+      <Charts data={data1}/>
+      <Show
+        data={data1} set={(d) => setData(dt => ({...dt, ...d}))}
+        delete={(key) => {
+          setData(cur => {
+            let d = {};
+            
+            for (let k of Object.keys(cur)) {
+              if (k !== key) {
+                d = {
+                  [k]: cur[k],
+                  ...d
+                };
+              }
+            }
+
+            return d;
+          });
+        }}/>
+      <Export data={data1}/>
     </QueryClientProvider>
   );
 }
