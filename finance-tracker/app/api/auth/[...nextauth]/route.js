@@ -1,11 +1,12 @@
 import NextAuth from "next-auth"
 import * as pg from 'pg';
+import config from '@/db/config';
 // import clientPromise from "@/lib/mongodb"
 import GoogleProvider from 'next-auth/providers/google';
 import SequelizeAdapter from "@next-auth/sequelize-adapter";
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("postgres://citus:LNMimadY20@c.sga556cc75308043abbbd4cadbb5ac6027.postgres.database.azure.com:5432/citus?sslmode=require", {
+const sequelize = new Sequelize(config.conn, {
     dialectModule: pg
 });
 
