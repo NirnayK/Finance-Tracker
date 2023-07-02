@@ -60,7 +60,7 @@ export default function Dashboard() {
     <QueryClientProvider client={new QueryClient()}>
       <Add data={data} set={(d) => setData(d)} />
       <Charts data={data1} />
-      <Show data={data1} />
+      <Show data={data1} set={(d) => setData(dt => ({...dt, ...d}))}/>
       <Export data={data1} />
     </QueryClientProvider>
   );
